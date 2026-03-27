@@ -1,28 +1,15 @@
 'use client';
 
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 interface HoverEffectsProps {
-  onHoverChange?: (hoverState: 'none' | 'hoverRight' | 'hoverLeft') => void;
+  onHoverChange?: (hovered: 'hoverRight' | 'hoverLeft' | 'none') => void;
 }
 
 export default function HoverEffects({ onHoverChange }: HoverEffectsProps) {
   const [hoverRight, setHoverRight] = useState(false);
   const [hoverLeft, setHoverLeft] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
-
-  // Detect screen size
-  useEffect(() => {
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth > 1024); // Only enable hover on desktop
-    };
-    handleResize(); // initial check
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  if (!isDesktop) return null; // Don't render hover buttons on smaller screens
 
   const handleRightEnter = () => {
     setHoverRight(true);
@@ -42,19 +29,24 @@ export default function HoverEffects({ onHoverChange }: HoverEffectsProps) {
     onHoverChange?.('none');
   };
 
+  // Disable hover effects on smaller screens
+  if (typeof window !== 'undefined' && window.innerWidth <= 1024) return null;
+
   return (
     <>
-      {/* Right side */}
+      {/* Right side button */}
       <div
+        className="side-section right"
         style={{
+          flexDirection: 'row',
           position: 'fixed',
           top: '50%',
           right: 0,
           transform: 'translateY(-50%)',
-          opacity: hoverLeft ? 0 : 1, // hide if left hovered
+          zIndex: 1,
+          opacity: hoverLeft ? 0 : 1, // hide opposite side when left hovered
           pointerEvents: hoverLeft ? 'none' : 'auto',
           transition: 'opacity 0.5s ease',
-          zIndex: 1,
         }}
       >
         <Image
@@ -70,7 +62,8 @@ export default function HoverEffects({ onHoverChange }: HoverEffectsProps) {
               position: 'absolute',
               top: '50%',
               right: '40px',
-              transform: 'translateY(-50%)',
+              transform: `translateY(-50%) scale(${hoverRight ? 1.1 : 1})`, // SCALE only
+              transition: 'transform 0.2s ease', // smooth scale
               background: 'transparent',
               border: 'none',
               cursor: 'pointer',
@@ -83,17 +76,19 @@ export default function HoverEffects({ onHoverChange }: HoverEffectsProps) {
         </a>
       </div>
 
-      {/* Left side */}
+      {/* Left side button */}
       <div
+        className="side-section left"
         style={{
+          flexDirection: 'row-reverse',
           position: 'fixed',
           top: '50%',
           left: 0,
           transform: 'translateY(-50%)',
-          opacity: hoverRight ? 0 : 1, // hide if right hovered
+          zIndex: 1,
+          opacity: hoverRight ? 0 : 1, // hide opposite side when right hovered
           pointerEvents: hoverRight ? 'none' : 'auto',
           transition: 'opacity 0.5s ease',
-          zIndex: 1,
         }}
       >
         <Image
@@ -108,7 +103,8 @@ export default function HoverEffects({ onHoverChange }: HoverEffectsProps) {
             position: 'absolute',
             top: '50%',
             left: '40px',
-            transform: 'translateY(-50%)',
+            transform: `translateY(-50%) scale(${hoverLeft ? 1.1 : 1})`, // SCALE only
+            transition: 'transform 0.2s ease', // smooth scale
             background: 'transparent',
             border: 'none',
             cursor: 'pointer',

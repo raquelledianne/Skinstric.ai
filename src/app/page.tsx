@@ -18,30 +18,30 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Slide heading based on hover + fade-in
+  // Slide heading slightly based on hover + fade-in
   useEffect(() => {
     if (!headingRef.current) return;
 
     headingRef.current.style.transition =
       'transform 0.5s ease, text-align 0.5s ease, opacity 1s ease';
 
-    // Handle hover slide
+    // Apply subtle slide
     switch (hoverState) {
       case 'hoverRight':
-        headingRef.current.style.transform = 'translateX(-360px)';
+        headingRef.current.style.transform = 'translateX(-80px)'; // small shift left
         headingRef.current.style.textAlign = 'left';
         break;
       case 'hoverLeft':
-        headingRef.current.style.transform = 'translateX(360px)';
+        headingRef.current.style.transform = 'translateX(80px)'; // small shift right
         headingRef.current.style.textAlign = 'right';
         break;
       default:
-        headingRef.current.style.transform = 'translateX(0)';
+        headingRef.current.style.transform = 'translateX(0)'; // centered
         headingRef.current.style.textAlign = 'center';
         break;
     }
 
-    // Apply fade-in
+    // Fade-in
     headingRef.current.style.opacity = fadeIn ? '1' : '0';
   }, [hoverState, fadeIn]);
 
@@ -65,7 +65,7 @@ export default function Home() {
         <h1
           className="intro-heading"
           ref={headingRef}
-          style={{ opacity: 0 }} // Start invisible
+          style={{ opacity: 0 }}
         >
           Sophisticated <br />
           <span>skincare</span>
