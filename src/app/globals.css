@@ -1,0 +1,283 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roobert TRIAL', sans-serif;
+  background-color: #fff;
+  overflow-x: hidden;
+}
+
+
+.intro-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 0;
+}
+
+
+.site-header {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  z-index: 3;
+}
+
+.site-header .logo {
+  position: relative;
+  width: 100%;
+  height: 70px;
+  object-fit: cover;
+}
+
+
+.intro-content {
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: calc(100vh - 50px);
+}
+
+.rhombus-bg {
+  display: none;
+}
+
+
+.intro-heading {
+  font-weight: 300;
+  font-size: 100px;
+  line-height: 120px;
+  letter-spacing: -4%;
+  text-align: center;
+  color: #1A1B1C;
+}
+
+.intro-heading span {
+  display: block;
+}
+
+
+.intro-description {
+  font-family: 'Roobert TRIAL';
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  text-transform: uppercase;
+  width: 316px;
+  color: #1a1b1c83;
+
+  position: fixed;
+  bottom: 32px;
+  left: 32px;
+
+  z-index: 10;
+}
+
+
+.intro-button-wrapper {
+  display: none;
+  margin-top: 20px;
+}
+
+.intro-button {
+  padding: 24px 60px;
+  font-size: 20px;
+  font-weight: 600;
+  border: none;
+  background: linear-gradient(135deg, #1A1B1C, #3c3d3f);
+  color: #fff;
+  cursor: pointer;
+  border-radius: 12px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s ease;
+}
+
+.intro-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(135deg, #2b2c2e, #4d4e50);
+}
+
+.intro-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, #1a1b1c, #333335);
+}
+
+.side-section {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+
+  pointer-events: none;
+}
+
+.side-section.left {
+  left: 0;
+  flex-direction: row-reverse;
+}
+
+.side-section.right {
+  right: 0;
+  flex-direction: row;
+}
+
+
+.half-rhombus {
+  width: 400px;
+  height: 400px;
+  object-fit: contain;
+}
+
+
+.side-button {
+  pointer-events: auto;
+
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.side-section.left .side-button {
+  left: 40px;
+}
+
+.side-section.right .side-button {
+  right: 40px;
+}
+
+.side-button-img {
+  width: 120px;
+  height: auto;
+}
+
+
+@media (max-width: 1024px) {
+
+  .intro-button-wrapper {
+    display: block;
+    text-align: center;
+  }
+
+
+  .side-section,
+  .half-rhombus,
+  .side-button {
+    display: none;
+  }
+
+
+  .rhombus-bg {
+    display: block;
+    width: 100%;
+    height: 100vh;
+
+    background: url('/rombuses.png') center/contain no-repeat;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }
+
+  
+  .intro-description {
+    position: static;
+    width: auto;
+    text-align: center;
+
+    margin-top: 12px;
+    margin-bottom: 10px;
+  }
+
+  
+  .intro-content {
+    align-items: center;
+    justify-content: center;
+  }
+
+  
+  .intro-heading {
+    font-size: 72px;
+    line-height: 80px;
+  }
+
+  
+  .site-header .logo {
+    height: 60px;
+  }
+
+  
+  .intro-button {
+    width: auto;
+    padding: 18px 40px;
+    font-size: 16px;
+  }
+}
+
+
+@media (max-width: 640px) {
+
+  
+  .site-header {
+    height: 40px;
+  }
+
+  .site-header .logo {
+    max-height: 50px;
+  }
+
+  
+  .intro-content {
+    height: calc(100vh - 40px);
+  }
+
+  
+  .intro-heading {
+    font-size: 48px;
+    line-height: 52px;
+  }
+
+  .intro-description {
+    font-size: 12px;
+    line-height: 20px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
+  
+  .intro-button {
+    padding: 14px 30px;
+    font-size: 14px;
+  }
+
+  
+  .rhombus-bg {
+    height: 100vh;
+    background-size: contain;
+  }
+}
