@@ -7,12 +7,12 @@ import Image from 'next/image';
 
 export default function LocationPage() {
   const searchParams = useSearchParams();
-  const name = searchParams.get('name') || ''; // get name from query
+  const nameFromQuery = searchParams.get('name') || '';
 
   const [city, setCity] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
@@ -21,17 +21,26 @@ export default function LocationPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!city.trim()) {
+    const trimmedCity = city.trim();
+    const storedName = nameFromQuery || localStorage.getItem('name')?.trim() || '';
+
+    if (!trimmedCity) {
       setError('City is required.');
       return;
     }
-    if (!isValidCity(city)) {
-      setError('City must contain only letters.');
+    if (!isValidCity(trimmedCity)) {
+      setError('City can only contain letters and spaces.');
+      return;
+    }
+    if (!storedName) {
+      setError('Name is missing. Please go back and enter your name.');
       return;
     }
 
     setError(null);
     setLoading(true);
+
+    const startTime = Date.now();
 
     try {
       const res = await fetch(
@@ -39,22 +48,32 @@ export default function LocationPage() {
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, location: city }), // send both name & location
+          body: JSON.stringify({ name: storedName, location: trimmedCity }),
         }
       );
 
-      if (!res.ok) throw new Error('API request failed');
-
       const data = await res.json();
-      if (!data.success) throw new Error(data.message || 'API returned failure');
+      if (!res.ok || !data.success) throw new Error(data.message || 'API request failed.');
 
-      setSuccess('Success! Your city was submitted.');
-      setCity('');
+      // Keep loading at least 2 seconds
+      const elapsed = Date.now() - startTime;
+      const delay = Math.max(0, 2000 - elapsed);
+
+      setTimeout(() => {
+        setLoading(false);
+        setSuccess(true);
+        setCity('');
+      }, delay);
+
     } catch (err: unknown) {
-      if (err instanceof Error) setError(err.message);
-      else setError('Something went wrong');
-    } finally {
-      setLoading(false);
+      const elapsed = Date.now() - startTime;
+      const delay = Math.max(0, 2000 - elapsed);
+
+      setTimeout(() => {
+        if (err instanceof Error) setError(err.message);
+        else setError('Something went wrong.');
+        setLoading(false);
+      }, delay);
     }
   };
 
@@ -63,9 +82,7 @@ export default function LocationPage() {
       <header className="testing-header">
         <div className="testing-header-left">
           <Link href="/" className="testing-brand">SKINSTRIC</Link>
-          <Image src="/Rectangle2710.png" alt="left bracket" width={5} height={19} />
-          <p>INTRO</p>
-          <Image src="/Rectangle2711.png" alt="right bracket" width={5} height={19} />
+          <Image src="/location.png" alt="bracket" width={70} height={20} />
         </div>
         <button className="testing-header-button">ENTER CODE</button>
       </header>
@@ -85,28 +102,75 @@ export default function LocationPage() {
         )}
 
         <div className="intro-wrapper">
-          <p className="uppercase">CLICK TO TYPE</p>
+          {/* Only show "CLICK TO TYPE" when not loading/success/error */}
+          {!loading && !success && !error && (
+            <p className="uppercase">CLICK TO TYPE</p>
+          )}
+
           <form className="testing-form" onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="Your city name"
-              autoComplete="off"
-              autoFocus
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-            />
+            <div className="input-container">
+              {/* Input is hidden while loading or success */}
+              {!loading && !success && (
+                <input
+                  type="text"
+                  placeholder="Your city name"
+                  autoComplete="off"
+                  autoFocus
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                />
+              )}
+
+              {/* Loading state */}
+              {loading && (
+                <div className="loading-box">
+                  Processing submission
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              )}
+
+              {/* Success message */}
+              {success && !loading && (
+                <div className="success-box">
+                  Success! Thank you. Proceed to the next step.
+                </div>
+              )}
+            </div>
           </form>
 
-          {loading && <p>Submitting...</p>}
-          {error && <p className="error-message">{error}</p>}
-          {success && <p className="success-message">{success}</p>}
+          {/* Error message */}
+          {error && !loading && (
+            <div className="status-message">
+              <p className="error-message">{error}</p>
+            </div>
+          )}
         </div>
       </div>
+
+      {/* Proceed button appears only after success */}
+      {success && !loading && (
+        <Image
+          src="/proceed.png"
+          alt="Proceed"
+          width={140}
+          height={72}
+          className="proceed-button"
+          onClick={() => console.log('Proceed clicked')} // replace with router.push when ready
+        />
+      )}
 
       <div className="testing-back">
         <Link href="/" className="back-link">
           <div className="back-group">
-            <Image src="/back-button.png" alt="Back Button" width={120} height={64} className="back-image" />
+            <Image
+              src="/back-button.png"
+              alt="Back Button"
+              width={120}
+              height={64}
+              className="back-image"
+            />
           </div>
         </Link>
       </div>

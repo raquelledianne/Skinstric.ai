@@ -52,9 +52,7 @@ export default function Home() {
         <div className="header-inner">
           <div className="header-left">
             <Link href="/" className="brand">SKINSTRIC</Link>
-            <Image src="/Rectangle2710.png" alt="left bracket" width={4} height={17} className="bracket" />
-            <p className="header-label">INTRO</p>
-            <Image src="/Rectangle2711.png" alt="right bracket" width={4} height={17} className="bracket" />
+            <Image src="/location.png" alt="bracket" width={70} height={20} />
           </div>
           <button className="header-button">ENTER CODE</button>
         </div>

@@ -52,9 +52,7 @@ export default function TestingPage() {
       <header className="testing-header">
         <div className="testing-header-left">
           <Link href="/" className="testing-brand">SKINSTRIC</Link>
-          <Image src="/Rectangle2710.png" alt="left bracket" width={5} height={19} />
-          <p>INTRO</p>
-          <Image src="/Rectangle2711.png" alt="right bracket" width={5} height={19} />
+          <Image src="/location.png" alt="bracket" width={70} height={20} />
         </div>
         <button className="testing-header-button">ENTER CODE</button>
       </header>

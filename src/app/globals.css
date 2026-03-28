@@ -332,11 +332,6 @@ body {
   z-index: 1000;
 }
 
-.testing-header-left img {
-  width: 4px;
-  height: 17px;
-}
-
 .testing-header-left p {
   font-weight: 600;
   font-size: 0.875rem;
@@ -519,4 +514,88 @@ body {
     left: 1rem;
     font-size: 0.65rem;
   }
+}
+
+/* Container for input / loading swap */
+.input-container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Loading box replaces input while waiting */
+
+.hide-when-processing {
+  display: none;
+}
+
+/* Loading text with bouncing dots */
+.loading-box {
+  font-family: 'Roobert TRIAL', sans-serif;
+  font-size: 1.25rem;
+  color: #777777; 
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.loading-box span {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #777777; /* dot color */
+  border-radius: 50%;
+  animation: bounce 0.6s infinite alternate;
+}
+
+.loading-box span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.loading-box span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-8px); }
+}
+
+/* Success message box */
+.success-box {
+  font-family: 'Roobert TRIAL', sans-serif;
+  font-size: 1.25rem;
+  color: #727272; /* adjust as needed */
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Error message styling */
+.error-message {
+  font-family: 'Roobert TRIAL', sans-serif;
+  font-size: 1.1rem;
+  color: #727272;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Proceed button styling */
+.proceed-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 140px; 
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.proceed-button:hover {
+  transform: scale(1.05);
 }
