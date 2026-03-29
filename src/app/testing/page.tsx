@@ -50,14 +50,15 @@ export default function TestingPage() {
     <main className="testing-main">
       
       <header className="testing-header">
-        <div className="testing-header-left">
-          <Link href="/" className="testing-brand">SKINSTRIC</Link>
-          <Image src="/location.png" alt="bracket" width={70} height={20} />
-        </div>
-        <button className="testing-header-button">ENTER CODE</button>
-      </header>
+  <div className="testing-header-left">
+    <Link href="/" className="testing-brand">SKINSTRIC</Link>
+    <Image src="/location.png" alt="bracket" width={70} height={20} />
+  </div>
 
-      <p className="start-analysis">TO START ANALYSIS</p>
+  <p className="start-analysis">TO START ANALYSIS</p>
+
+  <button className="testing-header-button">ENTER CODE</button>
+</header>
 
 
       <div className="testing-content">

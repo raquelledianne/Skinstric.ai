@@ -1,13 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
 export default function LocationPage() {
   const searchParams = useSearchParams();
   const nameFromQuery = searchParams.get('name') || '';
+  const router = useRouter();
 
   const [city, setCity] = useState('');
   const [loading, setLoading] = useState(false);
@@ -55,7 +56,6 @@ export default function LocationPage() {
       const data = await res.json();
       if (!res.ok || !data.success) throw new Error(data.message || 'API request failed.');
 
-      // Keep loading at least 2 seconds
       const elapsed = Date.now() - startTime;
       const delay = Math.max(0, 2000 - elapsed);
 
@@ -64,7 +64,6 @@ export default function LocationPage() {
         setSuccess(true);
         setCity('');
       }, delay);
-
     } catch (err: unknown) {
       const elapsed = Date.now() - startTime;
       const delay = Math.max(0, 2000 - elapsed);
@@ -80,14 +79,15 @@ export default function LocationPage() {
   return (
     <main className="testing-main">
       <header className="testing-header">
-        <div className="testing-header-left">
-          <Link href="/" className="testing-brand">SKINSTRIC</Link>
-          <Image src="/location.png" alt="bracket" width={70} height={20} />
-        </div>
-        <button className="testing-header-button">ENTER CODE</button>
-      </header>
+  <div className="testing-header-left">
+    <Link href="/" className="testing-brand">SKINSTRIC</Link>
+    <Image src="/location.png" alt="bracket" width={70} height={20} />
+  </div>
 
-      <p className="start-analysis">TO START ANALYSIS</p>
+  <p className="start-analysis">TO START ANALYSIS</p>
+
+  <button className="testing-header-button">ENTER CODE</button>
+</header>
 
       <div className="testing-content">
         {mounted && (
@@ -102,14 +102,12 @@ export default function LocationPage() {
         )}
 
         <div className="intro-wrapper">
-          {/* Only show "CLICK TO TYPE" when not loading/success/error */}
           {!loading && !success && !error && (
             <p className="uppercase">CLICK TO TYPE</p>
           )}
 
           <form className="testing-form" onSubmit={handleSubmit}>
             <div className="input-container">
-              {/* Input is hidden while loading or success */}
               {!loading && !success && (
                 <input
                   type="text"
@@ -121,7 +119,6 @@ export default function LocationPage() {
                 />
               )}
 
-              {/* Loading state */}
               {loading && (
                 <div className="loading-box">
                   Processing submission
@@ -131,16 +128,14 @@ export default function LocationPage() {
                 </div>
               )}
 
-              {/* Success message */}
               {success && !loading && (
                 <div className="success-box">
-                  Success! Thank you. Proceed to the next step.
+                  Success! Proceed to the next step.
                 </div>
               )}
             </div>
           </form>
 
-          {/* Error message */}
           {error && !loading && (
             <div className="status-message">
               <p className="error-message">{error}</p>
@@ -149,7 +144,7 @@ export default function LocationPage() {
         </div>
       </div>
 
-      {/* Proceed button appears only after success */}
+      {/* Proceed button navigates to /camera */}
       {success && !loading && (
         <Image
           src="/proceed.png"
@@ -157,7 +152,7 @@ export default function LocationPage() {
           width={140}
           height={72}
           className="proceed-button"
-          onClick={() => console.log('Proceed clicked')} // replace with router.push when ready
+          onClick={() => router.push('/camera')}
         />
       )}
 

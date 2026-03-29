@@ -296,12 +296,19 @@ body {
 /* Back to top-left positioning */
 .start-analysis {
   position: absolute;
-  top: 4rem; /* roughly matches top-16 */
-  left: 2.25rem; /* roughly matches left-9 */
-  font-weight: 600; /* font-semibold */
-  font-size: 0.75rem; /* text-xs */
+  top: 100%;   /* just below the header */
+  left: 1rem;  /* adjust for spacing under logo */
+  font-weight: 600;
+  font-size: 0.75rem; /* xs */
   text-align: left;
-  color: #000; /* text color; adjust if needed */
+  color: #000;
+  margin-top: 4px; /* small gap under logo */
+}
+
+@media (min-width: 768px) {
+  .start-analysis {
+    font-size: 0.875rem; /* sm */
+  }
 }
 
 /* Header left */
@@ -598,4 +605,290 @@ body {
 
 .proceed-button:hover {
   transform: scale(1.05);
+}
+
+/* Camera page base */
+/* ------------------------------
+   Camera Page Base
+--------------------------------*/
+.camera-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
+
+/* ------------------------------
+   Selection Layout
+--------------------------------*/
+.camera-selection-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12rem; /* more breathing room */
+  height: calc(100vh - 64px);
+  text-align: center;
+}
+
+/* ------------------------------
+   Card (Camera + Gallery)
+--------------------------------*/
+.camera-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+
+  /* Smooth animation */
+  transition: 
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    filter 0.35s ease;
+
+  padding: 1rem;
+  border-radius: 20px;
+}
+
+/* Hover effect */
+.camera-card:hover {
+  transform: translateY(-8px) scale(1.06);
+  filter: brightness(1.02);
+}
+
+/* Click/press effect */
+.camera-card:active {
+  transform: scale(0.97);
+}
+
+.camera-card label {
+  cursor: pointer;
+}
+
+.camera-card img {
+  cursor: pointer;
+}
+
+.camera-icon-large {
+  width: 220px;
+  height: 220px;
+  transition: transform 0.5s ease;
+}
+
+/* Bigger on desktop */
+@media (min-width: 768px) {
+  .camera-icon-large {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+/* Icon hover animation */
+.camera-card:hover .camera-icon-large {
+  transform: scale(1.1);
+}
+
+.camera-label {
+  margin-top: 1.25rem;
+  font-size: 13px;
+  line-height: 22px;
+  color: #1A1B1C;
+  text-align: center;
+  letter-spacing: 0.03em;
+
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Slight lift on hover */
+.camera-card:hover .camera-label {
+  transform: translateY(2px);
+  opacity: 0.9;
+}
+
+@media (min-width: 768px) {
+  .camera-label {
+    font-size: 14px;
+    line-height: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .camera-selection-row {
+    flex-direction: column;
+    gap: 5rem;
+  }
+
+  .camera-icon-large {
+    width: 200px;
+    height: 200px;
+  }
+}
+.testing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: #fff;
+}
+
+.testing-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transform: scale(0.75);
+  padding-top: 0.25rem;
+}
+
+.testing-brand {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #1A1B1C;
+  text-decoration: none;
+}
+
+.testing-back {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  z-index: 50;
+}
+
+.back-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 64px;
+  cursor: pointer;
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.back-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+
+  transform: scale(0.95);
+  transition: transform 0.3s ease;
+}
+
+.back-group:hover .back-image {
+  transform: scale(1.05);
+}
+
+/* ------------------------------
+   Camera Mode
+--------------------------------*/
+.camera-mode-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.camera-video {
+  width: 380px;
+  max-width: 90vw;
+  border-radius: 16px;
+  background: #000;
+}
+
+/* Capture button */
+.capture-button {
+  margin-top: 1rem;
+  padding: 0.85rem 2.5rem;
+  font-size: 16px;
+  font-weight: 600;
+
+  border: none;
+  border-radius: 10px;
+  background: #1A1B1C;
+  color: #fff;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.capture-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: #2b2c2e;
+  
+}
+
+.capture-button:active {
+  transform: scale(0.97);
+}
+
+.capture-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+.upload-mode-placeholder {
+  font-size: 1rem;
+  color: #1A1B1C;
+}
+
+
+.error-message {
+  color: #d11a2a;
+  font-size: 0.9rem;
+}
+
+.rotating-rombuses {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 320px; /* adjust size if needed */
+  height: 320px;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  animation: spinRombus 25s linear infinite;
+}
+
+@keyframes spinRombus {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Make sure icons stay above rhombus */
+.camera-card .camera-icon-large {
+  position: relative;
+  z-index: 1;
+}
+
+.icon-with-rombuses {
+  position: relative; /* Required for fill */
+  width: 280px;       /* Same as icon width */
+  height: 280px;      /* Same as icon height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinning-rombuses {
+  position: absolute; /* Stay behind the icon */
+  z-index: 0;
+  animation: spinRombus 30s linear infinite;
+}
+
+.camera-icon-large {
+  position: relative;
+  z-index: 1; /* On top of the spinning rhombus */
+}
+
+@keyframes spinRombus {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
