@@ -108,11 +108,11 @@ export default function CameraPage() {
           <Link href="/" className="testing-brand">SKINSTRIC</Link>
           <Image src="/location.png" alt="bracket" width={70} height={20} />
         </div>
+        <p className="start-analysis">TO START ANALYSIS</p>
         <button className="testing-header-button">ENTER CODE</button>
       </header>
 
-      {/* To Start Analysis Text */}
-      <p className="start-analysis">TO START ANALYSIS</p>
+     
 
       {/* Selection Mode */}
       {mode === 'select' && (

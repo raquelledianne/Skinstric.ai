@@ -870,8 +870,8 @@ body {
 
 .icon-with-rombuses {
   position: relative; /* Required for fill */
-  width: 280px;       /* Same as icon width */
-  height: 280px;      /* Same as icon height */
+  width: 580px;       /* Same as icon width */
+  height: 580px;      /* Same as icon height */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -885,7 +885,9 @@ body {
 
 .camera-icon-large {
   position: relative;
-  z-index: 1; /* On top of the spinning rhombus */
+  z-index: 1;
+  width: 90%;
+  height: 90%; /* On top of the spinning rhombus */
 }
 
 @keyframes spinRombus {
