@@ -157,7 +157,7 @@ export default function LocationPage() {
       )}
 
       <div className="testing-back">
-        <Link href="/" className="back-link">
+        <Link href="/testing" className="back-link">
           <div className="back-group">
             <Image
               src="/back-button.png"
