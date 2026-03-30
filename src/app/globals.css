@@ -293,25 +293,24 @@ body {
   z-index: 1000;
 }
 
-/* Back to top-left positioning */
+
 .start-analysis {
   position: absolute;
-  top: 100%;   /* just below the header */
-  left: 1rem;  /* adjust for spacing under logo */
+  top: 100%;   
+  left: 1rem;  
   font-weight: 600;
-  font-size: 0.75rem; /* xs */
+  font-size: 0.75rem; 
   text-align: left;
   color: #000;
-  margin-top: 4px; /* small gap under logo */
+  margin-top: 4px; 
 }
 
 @media (min-width: 768px) {
   .start-analysis {
-    font-size: 0.875rem; /* sm */
+    font-size: 0.875rem; 
   }
 }
 
-/* Header left */
 .testing-header-left {
   display: flex;
   align-items: center;
@@ -320,7 +319,6 @@ body {
   padding-top: 0.25rem;
 }
 
-/* Brand & brackets */
 .testing-brand {
   display: inline-flex;
   align-items: center;
@@ -347,7 +345,6 @@ body {
   margin-right: 0.375rem;
 }
 
-/* Header button */
 .testing-header-button {
   display: inline-flex;
   align-items: center;
@@ -371,7 +368,6 @@ body {
   background-color: rgba(26, 27, 28, 0.9);
 }
 
-/* Main content */
 .testing-content {
   min-height: 90vh;
   display: flex;
@@ -411,7 +407,6 @@ body {
   z-index: 10;
 }
 
-/* Rotating background */
 .rotating-background {
   position: absolute;
   top: 50%;
@@ -464,9 +459,6 @@ body {
   transform: scale(1);
 }
 
-/* ------------------------------
-   Responsive Adjustments
---------------------------------*/
 @media (max-width: 1024px) {
   .testing-form input {
     font-size: 2.25rem; 
@@ -523,7 +515,6 @@ body {
   }
 }
 
-/* Container for input / loading swap */
 .input-container {
   position: relative;
   width: 100%;
@@ -531,13 +522,10 @@ body {
   margin: 0 auto;
 }
 
-/* Loading box replaces input while waiting */
-
 .hide-when-processing {
   display: none;
 }
 
-/* Loading text with bouncing dots */
 .loading-box {
   font-family: 'Roobert TRIAL', sans-serif;
   font-size: 1.25rem;
@@ -551,7 +539,7 @@ body {
   display: inline-block;
   width: 0.5rem;
   height: 0.5rem;
-  background-color: #777777; /* dot color */
+  background-color: #777777; 
   border-radius: 50%;
   animation: bounce 0.6s infinite alternate;
 }
@@ -568,7 +556,6 @@ body {
   to { transform: translateY(-8px); }
 }
 
-/* Success message box */
 .success-box {
   font-family: 'Roobert TRIAL', sans-serif;
   font-size: 1.25rem;
@@ -577,7 +564,6 @@ body {
   animation: fadeIn 0.5s ease-in-out;
 }
 
-/* Error message styling */
 .error-message {
   font-family: 'Roobert TRIAL', sans-serif;
   font-size: 1.1rem;
@@ -586,13 +572,10 @@ body {
   margin-top: 0.5rem;
 }
 
-/* Fade in animation */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-
-/* Proceed button styling */
 .proceed-button {
   position: fixed;
   bottom: 20px;
@@ -607,7 +590,6 @@ body {
   transform: scale(1.05);
 }
 
-/* Camera page base */
 /* ------------------------------
    Camera Page Base
 --------------------------------*/
@@ -622,28 +604,21 @@ body {
   background-color: #fff;
 }
 
-/* ------------------------------
-   Selection Layout
---------------------------------*/
 .camera-selection-row {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 12rem; /* more breathing room */
+  gap: 12rem; 
   height: calc(100vh - 64px);
   text-align: center;
 }
 
-/* ------------------------------
-   Card (Camera + Gallery)
---------------------------------*/
 .camera-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
 
-  /* Smooth animation */
   transition: 
     transform 0.35s ease,
     box-shadow 0.35s ease,
@@ -653,13 +628,11 @@ body {
   border-radius: 20px;
 }
 
-/* Hover effect */
 .camera-card:hover {
   transform: translateY(-8px) scale(1.06);
   filter: brightness(1.02);
 }
 
-/* Click/press effect */
 .camera-card:active {
   transform: scale(0.97);
 }
@@ -678,7 +651,6 @@ body {
   transition: transform 0.5s ease;
 }
 
-/* Bigger on desktop */
 @media (min-width: 768px) {
   .camera-icon-large {
     width: 300px;
@@ -686,7 +658,6 @@ body {
   }
 }
 
-/* Icon hover animation */
 .camera-card:hover .camera-icon-large {
   transform: scale(1.1);
 }
@@ -702,7 +673,6 @@ body {
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-/* Slight lift on hover */
 .camera-card:hover .camera-label {
   transform: translateY(2px);
   opacity: 0.9;
@@ -786,9 +756,6 @@ body {
   transform: scale(1.05);
 }
 
-/* ------------------------------
-   Camera Mode
---------------------------------*/
 .camera-mode-container {
   display: flex;
   flex-direction: column;
@@ -803,7 +770,6 @@ body {
   background: #000;
 }
 
-/* Capture button */
 .capture-button {
   margin-top: 1rem;
   padding: 0.85rem 2.5rem;
@@ -850,7 +816,7 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 320px; /* adjust size if needed */
+  width: 320px; 
   height: 320px;
   transform: translate(-50%, -50%);
   z-index: 0;
@@ -862,23 +828,22 @@ body {
   to   { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-/* Make sure icons stay above rhombus */
 .camera-card .camera-icon-large {
   position: relative;
   z-index: 1;
 }
 
 .icon-with-rombuses {
-  position: relative; /* Required for fill */
-  width: 580px;       /* Same as icon width */
-  height: 580px;      /* Same as icon height */
+  position: relative; 
+  width: 580px;       
+  height: 580px;     
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .spinning-rombuses {
-  position: absolute; /* Stay behind the icon */
+  position: absolute; 
   z-index: 0;
   animation: spinRombus 30s linear infinite;
 }
@@ -887,7 +852,7 @@ body {
   position: relative;
   z-index: 1;
   width: 90%;
-  height: 90%; /* On top of the spinning rhombus */
+  height: 90%; 
 }
 
 @keyframes spinRombus {
@@ -899,7 +864,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 80px); /* header height */
+  height: calc(100vh - 80px); 
   width: 100%;
   background: #fff;
   position: relative;
@@ -914,7 +879,7 @@ body {
   top: 100px;
   right: 20px;
   width: 200px;
-  height: 200px; /* extra space for label */
+  height: 200px; 
   border: 2px solid #ccc;
   border-radius: 8px;
   overflow: hidden;
@@ -938,21 +903,19 @@ body {
   object-fit: cover;
 }
 
-/* Full-page loading */
 .loading-screen {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 80px); /* adjust for header if needed */
+  height: calc(100vh - 80px); 
   width: 100%;
   background: #fff;
   z-index: 50;
   overflow: hidden;
 }
 
-/* Loading text container */
 .loading-text-container {
   position: relative;
   z-index: 2;
@@ -992,16 +955,13 @@ body {
   40% { transform: scale(1); }
 }
 
-/* ------------------------------
-   Success Popup
---------------------------------*/
 .success-popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* dark semi-transparent overlay */
+  background: rgba(0, 0, 0, 0.5); 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1049,8 +1009,188 @@ body {
   transform: scale(0.97);
 }
 
-/* Smooth popup entrance */
+
 @keyframes popupAppear {
   0% { opacity: 0; transform: scale(0.9); }
   100% { opacity: 1; transform: scale(1); }
+}
+
+/* DEMOGRAPHICS */
+
+.demographics-page {
+  min-height: 100vh;
+  padding-top: 100px; 
+  background-color: #fff;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Top-left info */
+.top-left-info {
+  position: absolute;
+  top: 100px; 
+  left: 2rem;
+  max-width: 300px;
+  text-align: left;
+  z-index: 20; /* ensures it's above header and diamonds */
+}
+
+.top-left-info h1 {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.5px;
+}
+
+.top-left-info p {
+  font-size: 0.875rem; 
+  margin-top: 0.25rem;
+  color: #6b7280; 
+  text-transform: uppercase;
+  line-height: 24px;
+}
+
+/* Diamond container */
+.diamond-container {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  margin: 0 auto;
+  margin-top: 8rem; /* pushes it below the header */
+}
+
+/* ------------------------------
+Diamond Buttons
+--------------------------------*/
+.analysis-button {
+  width: 154px;
+  height: 154px;
+  background: #e5e7eb; /* gray-200 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: transform 0.3s ease, background 0.3s ease;
+  position: absolute;
+  cursor: pointer;
+
+  /* Base rotation for the diamond */
+  --base-transform: rotate(45deg);
+  transform: var(--base-transform);
+}
+
+.analysis-button span {
+  transform: rotate(-45deg); /* keep text upright */
+}
+
+/* Hover effect for clickable diamonds */
+.analysis-button:not(.disabled):hover {
+  background: #d1d5db; /* gray-300 */
+  transform: var(--base-transform) scale(1.1);
+}
+
+/* Disabled style for non-clickable diamonds */
+.analysis-button.disabled {
+  background: #f3f4f6;
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.analysis-button.disabled:hover {
+  transform: var(--base-transform); /* no scale on disabled */
+  background: #f3f4f6;
+}
+
+/* Positioning the 4 diamonds */
+.analysis-button.top {
+  --base-transform: translateX(-50%) rotate(45deg);
+  top: 0;
+  left: 50%;
+}
+
+.analysis-button.bottom {
+  --base-transform: translateX(-50%) rotate(45deg);
+  bottom: 0;
+  left: 50%;
+}
+
+.analysis-button.left {
+  --base-transform: translateY(-50%) rotate(45deg);
+  top: 50%;
+  left: 0;
+}
+
+.analysis-button.right {
+  --base-transform: translateY(-50%) rotate(45deg);
+  top: 50%;
+  right: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .diamond-container {
+    width: 280px;
+    height: 280px;
+    margin-top: 6rem;
+  }
+
+  .analysis-button {
+    width: 110px;
+    height: 110px;
+  }
+
+  .top-left-info {
+    top: 6rem;
+    left: 1rem;
+  }
+}
+
+.rombuses-background {
+position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;   /* larger than diamond container, scales with container */
+  height: 150%;  /* maintain square shape */
+  max-width: 1200px; /* prevent it from being too huge on large screens */
+  max-height: 1200px;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+/* Show when hovering */
+.rombuses-background.visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+.rombuses-background img {
+   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.4);
+}
+
+@media (max-width: 1024px) {
+  .rombuses-background {
+    width: 200%;
+    height: 200%;
+    max-width: 900px;
+    max-height: 900px;
+  }
+}
+
+@media (max-width: 640px) {
+  .rombuses-background {
+    width: 250%;
+    height: 250%;
+    max-width: 600px;
+    max-height: 600px;
+  }
 }
