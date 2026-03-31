@@ -23,7 +23,8 @@ export default function LocationPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const trimmedCity = city.trim();
-    const storedName = nameFromQuery || localStorage.getItem('name')?.trim() || '';
+    const storedName =
+      nameFromQuery || localStorage.getItem('name')?.trim() || '';
 
     if (!trimmedCity) {
       setError('City is required.');
@@ -54,7 +55,8 @@ export default function LocationPage() {
       );
 
       const data = await res.json();
-      if (!res.ok || !data.success) throw new Error(data.message || 'API request failed.');
+      if (!res.ok || !data.success)
+        throw new Error(data.message || 'API request failed.');
 
       const elapsed = Date.now() - startTime;
       const delay = Math.max(0, 2000 - elapsed);
@@ -79,15 +81,17 @@ export default function LocationPage() {
   return (
     <main className="testing-main">
       <header className="testing-header">
-  <div className="testing-header-left">
-    <Link href="/" className="testing-brand">SKINSTRIC</Link>
-    <Image src="/location.png" alt="bracket" width={70} height={20} />
-  </div>
+        <div className="testing-header-left">
+          <Link href="/" className="testing-brand">
+            SKINSTRIC
+          </Link>
+          <Image src="/location.png" alt="bracket" width={70} height={20} />
+        </div>
 
-  <p className="start-analysis">TO START ANALYSIS</p>
+        <p className="start-analysis">TO START ANALYSIS</p>
 
-  <button className="testing-header-button">ENTER CODE</button>
-</header>
+        <button className="testing-header-button">ENTER CODE</button>
+      </header>
 
       <div className="testing-content">
         {mounted && (
@@ -144,17 +148,15 @@ export default function LocationPage() {
         </div>
       </div>
 
-      {/* Proceed button navigates to /camera */}
-      {success && !loading && (
-        <Image
-          src="/proceed.png"
-          alt="Proceed"
-          width={140}
-          height={72}
-          className="proceed-button"
-          onClick={() => router.push('/camera')}
-        />
-      )}
+      {/* ✅ ALWAYS MOUNTED → animation now works */}
+      <Image
+        src="/proceed.png"
+        alt="Proceed"
+        width={140}
+        height={72}
+        className={`proceed-button ${success && !loading ? 'show' : ''}`}
+        onClick={() => success && router.push('/camera')}
+      />
 
       <div className="testing-back">
         <Link href="/testing" className="back-link">

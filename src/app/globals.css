@@ -580,14 +580,33 @@ body {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 140px; 
+  width: 140px;
   height: auto;
   cursor: pointer;
-  transition: transform 0.2s ease;
+
+  /* Start off-screen to the right */
+  opacity: 0;
+  transform: translateX(60px);
+
+  transition: 
+    opacity 0.5s ease,
+    transform 0.5s ease;
 }
 
+/* When visible */
+.proceed-button.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Hover effect (keep it smooth) */
 .proceed-button:hover {
-  transform: scale(1.05);
+  transform: translateX(0) scale(1.05);
+}
+
+/* Optional click feel */
+.proceed-button:active {
+  transform: translateX(0) scale(0.95);
 }
 
 /* ------------------------------
@@ -743,6 +762,21 @@ body {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.spinning-rombuses {
+  animation: spin 10s linear infinite;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 .back-image {
   width: 100%;
   height: 100%;
@@ -1193,4 +1227,213 @@ position: absolute;
     max-width: 600px;
     max-height: 600px;
   }
+}
+
+.summary-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 150px; 
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.summary-button:hover {
+  transform: scale(1.08);
+}
+
+/* ===== Summary Page ===== */
+.summary-page {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #ffffff;
+}
+
+/* ===== Header Text Under Header ===== */
+.summary-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 2rem; /* pushes it down from header */
+  margin-left: 1rem;
+}
+
+.start-analysis-summary {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.summary-h3 {
+  font-size: 3rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+/* ===== Layout Wrapper (centers everything) ===== */
+.summary-layout-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+/* ===== Layout Columns ===== */
+.summary-layout {
+  display: flex;
+  gap: 2.5rem;
+  width: 100%;
+  max-width: 1400px;
+  align-items: stretch; /* equal height cards */
+}
+
+/* ===== Shared Card Style ===== */
+.summary-card {
+  background: #ffffff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+
+  /* 🔥 Taller cards */
+  min-height: 550px;
+}
+
+/* ===== Sidebar ===== */
+.summary-sidebar {
+  flex: 0.8;
+}
+
+.summary-sidebar h2 {
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.attribute-item {
+  cursor: pointer;
+  padding: 0.6rem 0.4rem;
+  border-radius: 0.4rem;
+  transition: all 0.2s ease;
+}
+
+.attribute-item:hover {
+  background-color: #f3f4f6;
+}
+
+.attribute-item.font-semibold {
+  font-weight: 600;
+}
+
+/* ===== Middle Chart (Wider + Centered) ===== */
+.summary-chart-container {
+  flex: 1.6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.summary-chart-container svg {
+  width: 260px;
+  height: 260px;
+}
+
+.summary-chart-container p {
+  margin-top: 1rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+/* ===== Right Column ===== */
+.summary-confidence-list {
+  flex: 0.8;
+}
+
+.confidence-section {
+  margin-bottom: 2rem;
+}
+
+.confidence-section h3 {
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.confidence-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.confidence-list li {
+  padding: 0.4rem 0.5rem;
+  cursor: pointer;
+  border-radius: 0.3rem;
+  transition: background 0.2s ease;
+}
+
+.confidence-list li:hover {
+  background-color: #f3f4f6;
+}
+
+/* ===== Instruction Text ===== */
+.summary-instruction {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* ===== Loading State ===== */
+.summary-loading {
+  text-align: center;
+  padding: 4rem 0;
+  font-size: 1.25rem;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+  .summary-layout {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .summary-card {
+    min-height: auto;
+  }
+
+  .summary-h3 {
+    font-size: 2.5rem;
+  }
+}
+
+.summary-actions {
+  position: fixed;
+  bottom: 30px;
+  right: 40px;
+  display: flex;
+  gap: 16px;
+  z-index: 10;
+}
+
+.action-btn {
+  cursor: pointer;
+}
+
+.action-image {
+  transition: transform 0.2s ease;
+}
+
+.action-image:hover {
+  transform: scale(1.05);
+}
+.action-image:active {
+  transform: scale(0.95);
 }

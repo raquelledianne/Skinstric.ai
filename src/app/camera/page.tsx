@@ -63,10 +63,9 @@ export default function CameraPage() {
       ).then(res => res.json());
 
       const delay = new Promise(resolve => setTimeout(resolve, 3000));
-
       await Promise.all([apiPromise, delay]);
-      
-      // ✅ Show success popup
+
+      localStorage.setItem('capturedImage', base64);
       setShowSuccessPopup(true);
 
     } catch {
@@ -102,10 +101,9 @@ export default function CameraPage() {
         ).then(res => res.json());
 
         const delay = new Promise(resolve => setTimeout(resolve, 3000));
-
         await Promise.all([apiPromise, delay]);
-        
-        // ✅ Show success popup
+
+        localStorage.setItem('capturedImage', base64);
         setShowSuccessPopup(true);
 
       } catch {
@@ -118,6 +116,7 @@ export default function CameraPage() {
 
   return (
     <main className="camera-page">
+
       {/* Header */}
       <header className="testing-header">
         <div className="testing-header-left">
@@ -143,6 +142,7 @@ export default function CameraPage() {
               alt="Spinning Rhombus Background"
               fill
               style={{ objectFit: 'cover', filter: 'brightness(0.4)' }}
+              className="spinning-rombuses"
             />
           </div>
           <div className="loading-text-container">
@@ -165,40 +165,41 @@ export default function CameraPage() {
           {/* Selection Mode */}
           {mode === 'select' && (
             <div className="camera-selection-row">
+
               {/* Camera Card */}
               <div className="camera-card" onClick={() => setMode('camera')}>
-                <div className="icon-with-rombuses">
+                <div className="icon-with-rombuses relative w-[280px] h-[280px]">
                   <Image src="/rombuses.png" alt="Spinning Rhombus" fill style={{ objectFit: 'contain', filter: 'brightness(0.3)' }} className="spinning-rombuses" />
-                  <Image src="/camera.png" alt="Camera Icon" width={280} height={280} className="camera-icon-large" />
+                  <Image src="/camera.png" alt="Camera Icon" width={280} height={280} className="relative z-10" />
                 </div>
-                <p className="camera-label">
-                  ALLOW A.I.<br />TO SCAN YOUR FACE
-                </p>
+                <p className="camera-label">ALLOW A.I.<br />TO SCAN YOUR FACE</p>
               </div>
 
               {/* Gallery Card */}
               <div className="camera-card">
-                <div className="icon-with-rombuses">
+                <div className="icon-with-rombuses relative w-[280px] h-[280px]">
                   <Image src="/rombuses.png" alt="Spinning Rhombus" fill style={{ objectFit: 'contain', filter: 'brightness(0.3)' }} className="spinning-rombuses" />
-                  <label htmlFor="file-upload">
-                    <Image src="/gallery.png" alt="Gallery Icon" width={280} height={280} className="camera-icon-large" />
+                  <label htmlFor="file-upload" className="relative z-10 cursor-pointer">
+                    <Image src="/gallery.png" alt="Gallery Icon" width={280} height={280} />
                   </label>
                   <input id="file-upload" type="file" accept="image/*" onChange={handleUpload} style={{ display: 'none' }} />
                 </div>
-                <p className="camera-label">
-                  ALLOW A.I.<br />ACCESS GALLERY
-                </p>
+                <p className="camera-label">ALLOW A.I.<br />ACCESS GALLERY</p>
               </div>
+
             </div>
           )}
 
           {/* Camera Mode */}
           {mode === 'camera' && (
-            <div className="camera-mode-container">
+            <div className="camera-mode-container relative">
               {error && <p className="error-message">{error}</p>}
               <video ref={videoRef} autoPlay playsInline className="camera-video" />
               <canvas ref={canvasRef} style={{ display: 'none' }} />
-              <button className="capture-button" onClick={handleCapture}>Capture</button>
+              <div className="capture-button-container relative w-[150px] h-[150px] mx-auto mt-4">
+                <Image src="/rombuses.png" alt="Spinning Background" fill style={{ objectFit: 'contain', filter: 'brightness(0.3)' }} className="spinning-rombuses" />
+                <button className="capture-button relative z-10" onClick={handleCapture}>Capture</button>
+              </div>
             </div>
           )}
 
