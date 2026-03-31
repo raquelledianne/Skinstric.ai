@@ -205,30 +205,56 @@ export default function CameraPage() {
             )}
 
             {mode === 'camera' && (
-              <div className="camera-mode-container-fullscreen">
-                {error && <p className="error-message">{error}</p>}
+  <div className="camera-mode-container-fullscreen">
+    {error && <p className="error-message">{error}</p>}
 
-                <video
-                  ref={videoRef}
-                  autoPlay
-                  playsInline
-                  className="camera-video-fullscreen"
-                />
+    <video
+      ref={videoRef}
+      autoPlay
+      playsInline
+      className="camera-video-fullscreen"
+    />
 
-                <canvas ref={canvasRef} style={{ display: 'none' }} />
+    <canvas ref={canvasRef} style={{ display: 'none' }} />
 
-                <div className="take-pic-wrapper">
-                  <Image
-                    src="/take-pic.png"
-                    alt="Take Picture"
-                    width={80}
-                    height={80}
-                    onClick={handleCapture}
-                    className="take-pic-button"
-                  />
-                </div>
-              </div>
-            )}
+    {/* TAKE PICTURE BUTTON */}
+    <div className="take-pic-wrapper">
+      <Image
+        src="/take-pic.png"
+        alt="Take Picture"
+        width={160}
+        height={60}
+        onClick={handleCapture}
+        className="take-pic-button"
+      />
+    </div>
+
+    {/* BACK BUTTON BOTTOM LEFT */}
+    <div className="testing-back">
+      <Link href="/camera" className="back-link">
+        <div className="back-group">
+          <Image
+            src="/camera-back.png"
+            alt="Back Button"
+            width={120}
+            height={64}
+            className="back-image"
+          />
+        </div>
+      </Link>
+    </div>
+
+  <div className="camera-text-bottom">
+      <Image
+        src="/camera-text.png"
+        alt="Camera Text"
+        width={580} 
+        height={90} 
+        className="camera-text-image"
+      />
+    </div>
+  </div>
+)}
           </>
         )
       )}

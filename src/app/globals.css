@@ -817,11 +817,10 @@ body {
 
 /* TAKE PICTURE BUTTON OVER VIDEO */
 .take-pic-wrapper {
-  position: absolute;
-  bottom: 50px;
-  display: flex;
-  justify-content: center;
-  width: 100%;
+  position: fixed;       /* pin to viewport */
+  top: 50%;              /* vertical center */
+  right: 20px;           /* distance from right edge */
+  transform: translateY(-50%); /* true vertical centering */
   z-index: 2;
 }
 
@@ -853,6 +852,14 @@ body {
 .error-message {
   color: #d11a2a;
   font-size: 0.9rem;
+}
+
+.camera-text-bottom {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
 }
 
 /* LOADING SCREEN */
