@@ -35,14 +35,14 @@ export default function TestingPage() {
     setError(null);
     setSuccess(null);
 
-    // ✅ Store name instead of calling API
+   
     localStorage.setItem('name', trimmedName);
 
-    // Optional success message (brief)
+    
     setSuccess('Success! Redirecting...');
     setName('');
 
-    // Redirect to location page
+    
     router.push('/location');
   };
 

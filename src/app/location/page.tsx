@@ -1,4 +1,5 @@
 'use client';
+export const dynamic = 'force-dynamic';
 
 import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -148,7 +149,6 @@ export default function LocationPage() {
         </div>
       </div>
 
-      {/* ✅ ALWAYS MOUNTED → animation now works */}
       <Image
         src="/proceed.png"
         alt="Proceed"

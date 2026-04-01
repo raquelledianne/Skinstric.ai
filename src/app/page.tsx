@@ -12,20 +12,20 @@ export default function Home() {
   const [hoverState, setHoverState] = useState<HoverState>('none');
   const [fadeIn, setFadeIn] = useState<boolean>(false);
 
-  // Fade-in effect on mount with delay
+  
   useEffect(() => {
     const timer = setTimeout(() => setFadeIn(true), 300); // 0.3s delay
     return () => clearTimeout(timer);
   }, []);
 
-  // Slide heading slightly based on hover + fade-in
+  
   useEffect(() => {
     if (!headingRef.current) return;
 
     headingRef.current.style.transition =
       'transform 0.5s ease, text-align 0.5s ease, opacity 1s ease';
 
-    // Apply subtle slide
+    
     switch (hoverState) {
       case 'hoverRight':
         headingRef.current.style.transform = 'translateX(-80px)'; // small shift left
@@ -41,13 +41,13 @@ export default function Home() {
         break;
     }
 
-    // Fade-in
+   
     headingRef.current.style.opacity = fadeIn ? '1' : '0';
   }, [hoverState, fadeIn]);
 
   return (
     <main className="intro-page">
-      {/* HEADER */}
+      
       <header className="site-header">
         <div className="header-inner">
           <div className="header-left">
@@ -58,7 +58,7 @@ export default function Home() {
         </div>
       </header>
 
-      {/* INTRO CONTENT */}
+      
       <div className="intro-content" style={{ width: '100%', paddingLeft: '40px', paddingRight: '40px' }}>
         <h1
           className="intro-heading"
@@ -81,7 +81,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* CLIENT INTERACTIVE COMPONENT */}
+      
       <HoverEffects onHoverChange={setHoverState} />
 
       <div className="rhombus-bg"></div>

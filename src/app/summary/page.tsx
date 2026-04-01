@@ -30,7 +30,7 @@ export default function SummaryPage() {
   const [selectedCategory, setSelectedCategory] = useState<keyof APIData>('race');
   const [animatedValue, setAnimatedValue] = useState(0);
 
-  // Fetch API results
+  
   useEffect(() => {
     const fetchResults = async () => {
       const base64 = localStorage.getItem('capturedImage');
@@ -46,14 +46,14 @@ export default function SummaryPage() {
           }
         );
 
-        // Tell TypeScript exactly what type json is
+        
         const json: { data: APIData } = (await res.json()) as { data: APIData };
 
         if (!json.data) throw new Error('No data returned from API');
 
         setData(json.data);
 
-        // Safely get highest entries for initial "actual" values
+        
         const getHighestKey = (obj: Record<string, number>): string | null => {
           const entries = Object.entries(obj);
           if (!entries.length) return null;
@@ -75,7 +75,7 @@ export default function SummaryPage() {
     fetchResults();
   }, [router]);
 
-  // Animate chart
+  
   useEffect(() => {
     if (!data) return;
 
@@ -125,14 +125,14 @@ export default function SummaryPage() {
         <button className="testing-header-button">ENTER CODE</button>
       </header>
 
-      {/* ===== Headings ===== */}
+      
       <div className="summary-header-text">
         <p className="start-analysis-summary">A.I. ANALYSIS</p>
         <h3 className="summary-h3">DEMOGRAPHICS</h3>
         <p className="start-analysis-summary">PREDICTED RACE & AGE</p>
       </div>
 
-      {/* ✅ WRAPPER FIX (THIS CENTERS EVERYTHING) */}
+      
       <div className="summary-layout-wrapper">
         <div className="summary-layout">
 
@@ -150,7 +150,7 @@ export default function SummaryPage() {
             ))}
           </aside>
 
-          {/* Chart */}
+          
           <div className="summary-card summary-chart-container">
             <svg width="200" height="200">
               <circle cx="100" cy="100" r="90" stroke="#e5e7eb" strokeWidth="20" fill="none" />
@@ -169,7 +169,7 @@ export default function SummaryPage() {
             <p>{highestLabel}: {animatedValue.toFixed(1)}%</p>
           </div>
 
-          {/* Filtered List */}
+          
           <div className="summary-card summary-confidence-list">
             <div className="confidence-section">
               <h3>{selectedCategory.toUpperCase()}</h3>
@@ -186,12 +186,12 @@ export default function SummaryPage() {
         </div>
       </div>
 
-      {/* Instruction */}
+      
       <p className="summary-instruction">
         If A.I estimate is wrong, select the correct one
       </p>
 
-      {/* Back Button */}
+     
       <div className="testing-back">
         <Link href="/demographics" className="back-link">
           <div className="back-group">
@@ -206,7 +206,7 @@ export default function SummaryPage() {
         </Link>
       </div>
 
-      {/* Actions */}
+      
       <div className="summary-actions">
         <Link href="/" className="action-btn">
           <Image

@@ -24,7 +24,7 @@ export default function CameraPage() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  // CAMERA ACCESS
+  
   useEffect(() => {
     if (mode === 'camera' && navigator.mediaDevices?.getUserMedia) {
       navigator.mediaDevices
@@ -56,7 +56,7 @@ export default function CameraPage() {
 
   const handleDenyCamera = () => setShowPermissionPopup(false);
 
-  // CAPTURE
+  
   const handleCapture = async () => {
     if (!videoRef.current || !canvasRef.current) return;
 
@@ -97,7 +97,7 @@ export default function CameraPage() {
     }
   };
 
-  // UPLOAD (gallery)
+  
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
     if (!selected) return;
@@ -138,7 +138,7 @@ export default function CameraPage() {
 
         localStorage.setItem('capturedImage', base64);
 
-        // Ensure loading lasts at least 3 seconds
+        
         const elapsed = Date.now() - startTime;
         const delay = elapsed < 3000 ? 3000 - elapsed : 0;
         setTimeout(() => {
@@ -164,7 +164,7 @@ export default function CameraPage() {
 
   return (
     <main className="camera-page">
-      {/* HEADER */}
+    
       <header className="testing-header">
         <div className="testing-header-left">
           <Link href="/" className="testing-brand">SKINSTRIC</Link>
@@ -174,7 +174,7 @@ export default function CameraPage() {
         <button className="testing-header-button">ENTER CODE</button>
       </header>
 
-      {/* CAMERA LOADING */}
+     
       {cameraLoading && (
         <div className="camera-loading-screen">
           <div className="camera-stack">
@@ -193,7 +193,7 @@ export default function CameraPage() {
         </div>
       )}
 
-      {/* FILE UPLOAD LOADING */}
+      
       {showLoading && galleryPreview && (
         <div className="loading-screen">
           <div className="camera-loading-rombuses">
@@ -247,7 +247,7 @@ export default function CameraPage() {
         </div>
       )}
 
-      {/* MAIN UI (SELECT PAGE) */}
+      
       {!cameraLoading && !showLoading && (
         <>
           {mode === 'select' && (
@@ -289,7 +289,7 @@ export default function CameraPage() {
                 <p className="camera-label">ALLOW A.I.<br /> TO ACCESS GALLERY</p>
               </div>
 
-              {/* Gallery preview on select page with text ABOVE */}
+              
               {galleryPreview && (
                 <div
                   style={{
@@ -336,7 +336,7 @@ export default function CameraPage() {
         </>
       )}
 
-      {/* CAMERA MODE */}
+      
       {mode === 'camera' && (
         <div className="camera-mode-container-fullscreen">
           {error && <p className="error-message">{error}</p>}
@@ -392,7 +392,7 @@ export default function CameraPage() {
         </div>
       )}
 
-      {/* SUCCESS POPUP ON LOADING SCREEN */}
+     
       {showSuccessPopup && showLoading && (
         <div className="camera-popup-overlay" style={{ zIndex: 100 }}>
           <div className="camera-popup">
@@ -411,7 +411,7 @@ export default function CameraPage() {
         </div>
       )}
 
-      {/* PERMISSION POPUP */}
+      
       {showPermissionPopup && (
         <div className="camera-popup-overlay">
           <div className="camera-popup">
