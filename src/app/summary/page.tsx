@@ -19,6 +19,7 @@ type ActualData = {
 
 export default function SummaryPage() {
   const router = useRouter();
+
   const [data, setData] = useState<APIData | null>(null);
   const [loading, setLoading] = useState(true);
   const [actual, setActual] = useState<ActualData>({
@@ -29,6 +30,7 @@ export default function SummaryPage() {
   const [selectedCategory, setSelectedCategory] = useState<keyof APIData>('race');
   const [animatedValue, setAnimatedValue] = useState(0);
 
+  // Fetch API results
   useEffect(() => {
     const fetchResults = async () => {
       const base64 = localStorage.getItem('capturedImage');
@@ -44,17 +46,27 @@ export default function SummaryPage() {
           }
         );
 
-        const json = await res.json();
+        // Tell TypeScript exactly what type json is
+        const json: { data: APIData } = (await res.json()) as { data: APIData };
+
+        if (!json.data) throw new Error('No data returned from API');
+
         setData(json.data);
 
-        // Set initial "actual" values
+        // Safely get highest entries for initial "actual" values
+        const getHighestKey = (obj: Record<string, number>): string | null => {
+          const entries = Object.entries(obj);
+          if (!entries.length) return null;
+          return entries.sort((a, b) => b[1] - a[1])[0][0];
+        };
+
         setActual({
-          race: Object.entries(json.data.race).sort((a, b) => b[1] - a[1])[0][0],
-          age: Object.entries(json.data.age).sort((a, b) => b[1] - a[1])[0][0],
-          gender: Object.entries(json.data.gender).sort((a, b) => b[1] - a[1])[0][0],
+          race: getHighestKey(json.data.race),
+          age: getHighestKey(json.data.age),
+          gender: getHighestKey(json.data.gender),
         });
       } catch (err) {
-        console.error(err);
+        console.error('Failed to fetch results:', err);
       } finally {
         setLoading(false);
       }
@@ -68,11 +80,10 @@ export default function SummaryPage() {
     if (!data) return;
 
     const selectedData = data[selectedCategory];
-    const highestEntry = Object.entries(selectedData).sort((a, b) => b[1] - a[1])[0];
-    const highestValue = highestEntry[1] * 100;
+    const highestValue = Math.max(...Object.values(selectedData)) * 100;
 
     let start = 0;
-    const increment = highestValue / 60;
+    const increment = highestValue / 60; // ~60 frames
 
     const interval = setInterval(() => {
       start += increment;
@@ -82,7 +93,7 @@ export default function SummaryPage() {
       } else {
         setAnimatedValue(start);
       }
-    }, 16);
+    }, 16); // ~60fps
 
     return () => clearInterval(interval);
   }, [data, selectedCategory]);
@@ -95,9 +106,8 @@ export default function SummaryPage() {
       .sort((a, b) => b[1] - a[1])
       .map(([key, value]) => ({ key, value: (value * 100).toFixed(2) }));
 
-  const selectedData = data[selectedCategory];
-  const highestEntry = Object.entries(selectedData).sort((a, b) => b[1] - a[1])[0];
-  const highestLabel = highestEntry[0];
+  const highestLabel = Object.entries(data[selectedCategory])
+    .sort((a, b) => b[1] - a[1])[0]?.[0] ?? '';
 
   const handleUpdateActual = (category: keyof ActualData, value: string) => {
     setActual(prev => ({ ...prev, [category]: value }));
@@ -128,15 +138,14 @@ export default function SummaryPage() {
 
           {/* Sidebar */}
           <aside className="summary-card summary-sidebar">
-            <h2>Actual Attributes</h2>
-
-            {(['race', 'age', 'gender'] as (keyof APIData)[]).map(category => (
+            <h2>A.I. Confidence</h2>
+            {(['race', 'age', 'gender'] as (keyof ActualData)[]).map(category => (
               <div
                 key={category}
                 className={`attribute-item ${selectedCategory === category ? 'font-semibold' : ''}`}
                 onClick={() => setSelectedCategory(category)}
               >
-                {category.charAt(0).toUpperCase() + category.slice(1)}: {actual[category]}
+                {category.charAt(0).toUpperCase() + category.slice(1)}: {actual[category] ?? 'N/A'}
               </div>
             ))}
           </aside>
@@ -182,6 +191,7 @@ export default function SummaryPage() {
         If A.I estimate is wrong, select the correct one
       </p>
 
+      {/* Back Button */}
       <div className="testing-back">
         <Link href="/demographics" className="back-link">
           <div className="back-group">
@@ -196,27 +206,28 @@ export default function SummaryPage() {
         </Link>
       </div>
 
+      {/* Actions */}
       <div className="summary-actions">
-  <Link href="/" className="action-btn">
-    <Image
-      src="/reset.png"
-      alt="Reset"
-      width={100}
-      height={40}
-      className="action-image"
-    />
-  </Link>
+        <Link href="/" className="action-btn">
+          <Image
+            src="/reset.png"
+            alt="Reset"
+            width={100}
+            height={40}
+            className="action-image"
+          />
+        </Link>
 
-  <div className="action-btn">
-    <Image
-      src="/confirm.png"
-      alt="Confirm"
-      width={100}
-      height={40}
-      className="action-image"
-    />
-  </div>
-</div>
+        <div className="action-btn">
+          <Image
+            src="/confirm.png"
+            alt="Confirm"
+            width={100}
+            height={40}
+            className="action-image"
+          />
+        </div>
+      </div>
 
     </main>
   );
