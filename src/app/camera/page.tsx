@@ -12,10 +12,12 @@ export default function CameraPage() {
   const [file, setFile] = useState<File | null>(null);
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const [showPermissionPopup, setShowPermissionPopup] = useState(false);
   const [cameraLoading, setCameraLoading] = useState(false);
+  const [capturedFrame, setCapturedFrame] = useState<string | null>(null);
+  const [flash, setFlash] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -26,9 +28,7 @@ export default function CameraPage() {
       navigator.mediaDevices
         .getUserMedia({ video: { facingMode: 'user' } })
         .then((stream) => {
-          if (videoRef.current) {
-            videoRef.current.srcObject = stream;
-          }
+          if (videoRef.current) videoRef.current.srcObject = stream;
         })
         .catch(() => setError('Camera access denied'));
     }
@@ -52,15 +52,11 @@ export default function CameraPage() {
     }, 3000);
   };
 
-  const handleDenyCamera = () => {
-    setShowPermissionPopup(false);
-  };
+  const handleDenyCamera = () => setShowPermissionPopup(false);
 
   // CAPTURE
   const handleCapture = async () => {
     if (!videoRef.current || !canvasRef.current) return;
-
-    setProcessing(true);
 
     const video = videoRef.current;
     const canvas = canvasRef.current;
@@ -72,21 +68,25 @@ export default function CameraPage() {
     if (!ctx) return;
 
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    const base64 = canvas.toDataURL('image/jpeg').split(',')[1];
+
+    const base64Full = canvas.toDataURL('image/jpeg');
+    const base64 = base64Full.split(',')[1];
+
+    // Freeze + flash
+    setCapturedFrame(base64Full);
+    setFlash(true);
+    setTimeout(() => setFlash(false), 150);
 
     try {
-      const apiPromise = fetch(
+      setProcessing(true);
+      await fetch(
         'https://us-central1-api-skinstric-ai.cloudfunctions.net/skinstricPhaseTwo',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ image: base64 }),
         }
-      ).then((res) => res.json());
-
-      const delay = new Promise((resolve) => setTimeout(resolve, 3000));
-      await Promise.all([apiPromise, delay]);
-
+      );
       localStorage.setItem('capturedImage', base64);
       setShowSuccessPopup(true);
     } catch {
@@ -113,18 +113,14 @@ export default function CameraPage() {
       if (!base64) return;
 
       try {
-        const apiPromise = fetch(
+        await fetch(
           'https://us-central1-api-skinstric-ai.cloudfunctions.net/skinstricPhaseTwo',
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ image: base64 }),
           }
-        ).then((res) => res.json());
-
-        const delay = new Promise((resolve) => setTimeout(resolve, 3000));
-        await Promise.all([apiPromise, delay]);
-
+        );
         localStorage.setItem('capturedImage', base64);
         setShowSuccessPopup(true);
       } catch {
@@ -137,7 +133,6 @@ export default function CameraPage() {
 
   return (
     <main className="camera-page">
-
       {/* HEADER */}
       <header className="testing-header">
         <div className="testing-header-left">
@@ -148,12 +143,10 @@ export default function CameraPage() {
         <button className="testing-header-button">ENTER CODE</button>
       </header>
 
-      {/* CAMERA LOADING STACK */}
+      {/* CAMERA LOADING */}
       {cameraLoading && (
         <div className="camera-loading-screen">
           <div className="camera-stack">
-
-            {/* Overlay: rombuses + camera */}
             <div className="camera-overlay">
               <div className="camera-loading-rombuses">
                 <Image src="/rombuses.png" fill alt="" className="rombuses-img" />
@@ -164,8 +157,6 @@ export default function CameraPage() {
                 <p className="camera-loading-text">Setting up your camera...</p>
               </div>
             </div>
-
-            {/* setup.png underneath */}
             <img src="/setup.png" alt="Setup" className="camera-setup-base" />
           </div>
         </div>
@@ -173,90 +164,88 @@ export default function CameraPage() {
 
       {/* MAIN UI */}
       {!cameraLoading && (
-        processing ? (
-          <div className="loading-screen">
-            <p className="loading-text">Preparing your analysis</p>
-          </div>
-        ) : (
-          <>
-            {mode === 'select' && (
-              <div className="camera-selection-row">
-
-                <div className="camera-card" onClick={() => setShowPermissionPopup(true)}>
-                  <div className="icon-with-rombuses">
-                    <Image src="/rombuses.png" fill alt="" className="spinning-rombuses-2" />
-                    <Image src="/camera.png" alt="" width={280} height={280} />
-                  </div>
-                  <p className="camera-label">ALLOW A.I.<br />TO SCAN YOUR FACE</p>
+        <>
+          {mode === 'select' && (
+            <div className="camera-selection-row">
+              <div className="camera-card" onClick={() => setShowPermissionPopup(true)}>
+                <div className="icon-with-rombuses">
+                  <Image src="/rombuses.png" fill alt="" className="spinning-rombuses-2" />
+                  <Image src="/camera.png" alt="" width={280} height={280} />
                 </div>
-
-                <div className="camera-card">
-                  <div className="icon-with-rombuses">
-                    <Image src="/rombuses.png" fill alt="" className="spinning-rombuses" />
-                    <label htmlFor="file-upload">
-                      <Image src="/gallery.png" alt="" width={280} height={280} />
-                    </label>
-                    <input id="file-upload" type="file" accept="image/*" onChange={handleUpload} hidden />
-                  </div>
-                  <p className="camera-label">ALLOW A.I.<br />ACCESS GALLERY</p>
-                </div>
-
+                <p className="camera-label">ALLOW A.I.<br />TO SCAN YOUR FACE</p>
               </div>
-            )}
 
-            {mode === 'camera' && (
-  <div className="camera-mode-container-fullscreen">
-    {error && <p className="error-message">{error}</p>}
+              <div className="camera-card">
+                <div className="icon-with-rombuses">
+                  <Image src="/rombuses.png" fill alt="" className="spinning-rombuses" />
+                  <label htmlFor="file-upload">
+                    <Image src="/gallery.png" alt="" width={280} height={280} />
+                  </label>
+                  <input id="file-upload" type="file" accept="image/*" onChange={handleUpload} hidden />
+                </div>
+                <p className="camera-label">ALLOW A.I.<br />ACCESS GALLERY</p>
+              </div>
+            </div>
+          )}
 
-    <video
-      ref={videoRef}
-      autoPlay
-      playsInline
-      className="camera-video-fullscreen"
-    />
+          {mode === 'camera' && (
+            <div className="camera-mode-container-fullscreen">
+              {error && <p className="error-message">{error}</p>}
 
-    <canvas ref={canvasRef} style={{ display: 'none' }} />
+              {!capturedFrame ? (
+                <video ref={videoRef} autoPlay playsInline className="camera-video-fullscreen" />
+              ) : (
+                <img src={capturedFrame} className="camera-video-fullscreen" />
+              )}
 
-    {/* TAKE PICTURE BUTTON */}
-    <div className="take-pic-wrapper">
-      <Image
-        src="/take-pic.png"
-        alt="Take Picture"
-        width={160}
-        height={60}
-        onClick={handleCapture}
-        className="take-pic-button"
-      />
-    </div>
+              <canvas ref={canvasRef} style={{ display: 'none' }} />
+              {flash && <div className="camera-flash" />}
 
-    {/* BACK BUTTON BOTTOM LEFT */}
-    <div className="testing-back">
-      <Link href="/camera" className="back-link">
-        <div className="back-group">
-          <Image
-            src="/camera-back.png"
-            alt="Back Button"
-            width={120}
-            height={64}
-            className="back-image"
-          />
-        </div>
-      </Link>
-    </div>
+              {showSuccessPopup && (
+                <>
+                  <div className="camera-dim" />
+                  <div className="great-shot-wrapper">
+                    <Image src="/great-shot.png" alt="Great Shot" width={400} height={120} />
+                  </div>
+                  <Image
+                    src="/proceed-white.png"
+                    alt="Proceed"
+                    width={90}
+                    height={50}
+                    className="proceed-button show"
+                    onClick={() => router.push('/demographics')}
+                  />
+                </>
+              )}
 
-  <div className="camera-text-bottom">
-      <Image
-        src="/camera-text.png"
-        alt="Camera Text"
-        width={580} 
-        height={90} 
-        className="camera-text-image"
-      />
-    </div>
-  </div>
-)}
-          </>
-        )
+              <div className="take-pic-wrapper">
+                <Image
+                  src="/take-pic.png"
+                  alt="Take Picture"
+                  width={160}
+                  height={60}
+                  onClick={!showSuccessPopup ? handleCapture : undefined}
+                  className="take-pic-button"
+                />
+              </div>
+
+              {/* BACK BUTTON */}
+              {mode === 'camera' && (
+                <div className="testing-back">
+                  <Link href="/location" className="back-link">
+                    <div className="back-group">
+                      <Image src="/camera-back.png" alt="Back" className="back-image" width={120} height={64} />
+                    </div>
+                  </Link>
+                </div>
+              )}
+
+              <div className="camera-text-bottom">
+                <Image src="/camera-text.png" alt="" width={580} height={90} />
+              </div>
+            </div>
+          )}
+        </>
       )}
 
       {/* PERMISSION POPUP */}
@@ -272,31 +261,16 @@ export default function CameraPage() {
         </div>
       )}
 
-      {/* SUCCESS */}
-      {showSuccessPopup && (
-        <div className="success-popup-overlay">
-          <div className="success-popup">
-            <p>Image uploaded successfully!</p>
-            <button onClick={() => router.push('/demographics')}>
-              OK
-            </button>
-          </div>
+      {/* BACK BUTTON FOR NON-CAMERA PAGES */}
+      {mode !== 'camera' && (
+        <div className="testing-back">
+          <Link href="/location" className="back-link">
+            <div className="back-group">
+              <Image src="/back-button.png" alt="Back" className="back-image" width={120} height={64} />
+            </div>
+          </Link>
         </div>
       )}
-
-      <div className="testing-back">
-        <Link href="/location" className="back-link">
-          <div className="back-group">
-            <Image
-              src="/back-button.png"
-              alt="Back Button"
-              width={150}
-              height={70}
-              className="back-image"
-            />
-          </div>
-        </Link>
-      </div>
     </main>
   );
 }

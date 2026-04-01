@@ -1055,6 +1055,58 @@ body {
   margin-top: -120px;
 }
 
+
+.great-shot-wrapper img {
+  width: 170px;
+  max-width: 80vw;
+  height: auto;
+}
+
+/* FLASH */
+.camera-flash {
+  position: fixed;
+  inset: 0;
+  background: white;
+  z-index: 10;
+  animation: flashAnim 0.15s ease;
+}
+
+@keyframes flashAnim {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.camera-dim {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 2;
+}
+
+.great-shot-wrapper {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  animation: fadeSlideDown 0.6s ease forwards;
+}
+
+@keyframes fadeSlideDown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.proceed-button {
+  z-index: 5;
+}
+
 /* ANIMATIONS */
 @keyframes spinRombus { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes slowSpin { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
