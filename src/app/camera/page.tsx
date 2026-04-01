@@ -210,8 +210,8 @@ export default function CameraPage() {
                   <Image
                     src="/proceed-white.png"
                     alt="Proceed"
-                    width={90}
-                    height={50}
+                    width={70}
+                    height={30}
                     className="proceed-button show"
                     onClick={() => router.push('/demographics')}
                   />
@@ -241,7 +241,7 @@ export default function CameraPage() {
               )}
 
               <div className="camera-text-bottom">
-                <Image src="/camera-text.png" alt="" width={580} height={90} />
+                <Image src="/camera-text.png" alt="" width={570} height={70} />
               </div>
             </div>
           )}
