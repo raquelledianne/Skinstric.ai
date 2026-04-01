@@ -1,12 +1,19 @@
 'use client';
-export const dynamic = 'force-dynamic';
 
-import { useState, useEffect } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
 export default function LocationPage() {
+  return (
+    <Suspense fallback={<p className="summary-loading">Loading...</p>}>
+      <LocationInner />
+    </Suspense>
+  );
+}
+
+function LocationInner() {
   const searchParams = useSearchParams();
   const nameFromQuery = searchParams.get('name') || '';
   const router = useRouter();
