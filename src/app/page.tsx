@@ -12,42 +12,40 @@ export default function Home() {
   const [hoverState, setHoverState] = useState<HoverState>('none');
   const [fadeIn, setFadeIn] = useState<boolean>(false);
 
-  
   useEffect(() => {
-    const timer = setTimeout(() => setFadeIn(true), 300); // 0.3s delay
+    const timer = setTimeout(() => setFadeIn(true), 300);
     return () => clearTimeout(timer);
   }, []);
 
-  
   useEffect(() => {
-    if (!headingRef.current) return;
+  if (!headingRef.current) return;
 
-    headingRef.current.style.transition =
-      'transform 0.5s ease, text-align 0.5s ease, opacity 1s ease';
+  const el = headingRef.current;
 
-    
-    switch (hoverState) {
-      case 'hoverRight':
-        headingRef.current.style.transform = 'translateX(-80px)'; // small shift left
-        headingRef.current.style.textAlign = 'left';
-        break;
-      case 'hoverLeft':
-        headingRef.current.style.transform = 'translateX(80px)'; // small shift right
-        headingRef.current.style.textAlign = 'right';
-        break;
-      default:
-        headingRef.current.style.transform = 'translateX(0)'; // centered
-        headingRef.current.style.textAlign = 'center';
-        break;
-    }
+  // Smooth transition (already buttery)
+  el.style.transition =
+    'transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.5s ease';
 
-   
-    headingRef.current.style.opacity = fadeIn ? '1' : '0';
-  }, [hoverState, fadeIn]);
+  switch (hoverState) {
+    case 'hoverRight':
+      el.style.transform = 'translate3d(-200px, 0, 0)'; // <-- slide further left
+      el.style.opacity = '0.9';
+      break;
+
+    case 'hoverLeft':
+      el.style.transform = 'translate3d(200px, 0, 0)'; // <-- slide further right
+      el.style.opacity = '0.9';
+      break;
+
+    default:
+      el.style.transform = 'translate3d(0, 0, 0)';
+      el.style.opacity = fadeIn ? '1' : '0'; 
+      break;
+  }
+}, [hoverState, fadeIn]);
 
   return (
     <main className="intro-page">
-      
       <header className="site-header">
         <div className="header-inner">
           <div className="header-left">
@@ -58,7 +56,6 @@ export default function Home() {
         </div>
       </header>
 
-      
       <div className="intro-content" style={{ width: '100%', paddingLeft: '40px', paddingRight: '40px' }}>
         <h1
           className="intro-heading"
@@ -81,7 +78,6 @@ export default function Home() {
         </div>
       </div>
 
-      
       <HoverEffects onHoverChange={setHoverState} />
 
       <div className="rhombus-bg"></div>

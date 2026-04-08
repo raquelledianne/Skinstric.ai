@@ -10,6 +10,10 @@ body {
   overflow-x: hidden;
 }
 
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
 /* ------------------------------
    Intro Page
 --------------------------------*/
@@ -281,19 +285,6 @@ body {
 /* ------------------------------
    Testing Page
 --------------------------------*/
-.testing-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 64px;
-  width: 100%;
-  padding: 0.75rem 1rem;
-  margin-bottom: 0.75rem;
-  position: relative;
-  z-index: 1000;
-}
-
-
 .start-analysis {
   position: absolute;
   top: 100%;   
@@ -369,14 +360,11 @@ body {
 }
 
 .testing-content {
-  min-height: 90vh;
+  height: calc(100vh - 64px); /* subtract header height */
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  position: relative;
-  background: #fff;
+  overflow: hidden;
 }
 
 .testing-content p.uppercase {
@@ -421,6 +409,10 @@ body {
   z-index: 1;
   animation: rotateRombus 30s linear infinite;
   opacity: 1;
+  pointer-events: none;
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden;
 }
 
 @keyframes rotateRombus {
@@ -430,7 +422,7 @@ body {
 
 
 .testing-back {
-  position: absolute;
+  position: fixed;
   bottom: 2rem;
   left: 2rem;
   z-index: 50;
@@ -1201,6 +1193,12 @@ body {
 /* ------------------------------
 Diamond Buttons
 --------------------------------*/
+/* ------------------------------
+Diamond Buttons
+--------------------------------*/
+/* ------------------------------
+Diamond Buttons
+--------------------------------*/
 .analysis-button {
   width: 154px;
   height: 154px;
@@ -1210,36 +1208,50 @@ Diamond Buttons
   justify-content: center;
   font-weight: 600;
   text-transform: uppercase;
-  transition: transform 0.3s ease, background 0.3s ease;
+  transition: transform 0.3s ease, background 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
   position: absolute;
   cursor: pointer;
 
   /* Base rotation for the diamond */
   --base-transform: rotate(45deg);
   transform: var(--base-transform);
+  box-shadow: 0 0 0 rgba(0,0,0,0); /* default no shadow */
 }
 
 .analysis-button span {
   transform: rotate(-45deg); /* keep text upright */
 }
 
-/* Hover effect for clickable diamonds */
-.analysis-button:not(.disabled):hover {
-  background: #d1d5db; /* gray-300 */
+/* Top diamond: main clickable pop with shadow */
+.analysis-button.top:hover {
   transform: var(--base-transform) scale(1.1);
+  background: #d1d5db;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2); /* subtle lift */
 }
 
-/* Disabled style for non-clickable diamonds */
+/* Left, Right, Bottom diamonds: smaller pop with shadow */
+.analysis-button.left:hover,
+.analysis-button.right:hover,
+.analysis-button.bottom:hover {
+  transform: var(--base-transform) scale(1.05);
+  opacity: 0.9;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15); /* lighter lift */
+}
+
+/* Disabled diamonds: visually pop with shadow, still not clickable */
 .analysis-button.disabled {
   background: #f3f4f6;
-  cursor: not-allowed;
-  pointer-events: none;
+  cursor: default;       /* non-clickable */
+  pointer-events: auto;  /* allow hover effects */
   opacity: 0.7;
+  box-shadow: 0 0 0 rgba(0,0,0,0); /* reset */
 }
 
 .analysis-button.disabled:hover {
-  transform: var(--base-transform); /* no scale on disabled */
+  transform: var(--base-transform) scale(1.05);
+  opacity: 0.9;
   background: #f3f4f6;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
 /* Positioning the 4 diamonds */
@@ -1265,6 +1277,14 @@ Diamond Buttons
   --base-transform: translateY(-50%) rotate(45deg);
   top: 50%;
   right: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .analysis-button {
+    width: 110px;
+    height: 110px;
+  }
 }
 
 /* Responsive adjustments */
@@ -1526,6 +1546,36 @@ position: absolute;
   z-index: 10;
 }
 
+@media (max-width: 1024px) {
+  /* Back button */
+  .testing-back,
+  .back-group {
+    background-color: #fff; 
+    border-radius: 8px;      
+    padding: 0.5rem;         
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15); 
+  }
+
+
+  .summary-actions {
+    background-color: #fff; 
+    color: #1a1b1c;           
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+}
+
+@media (max-width: 640px) {
+  .testing-back,
+  .back-group {
+    padding: 0.75rem 1rem;  
+  }
+
+  .summary-actions {
+    padding: 0.75rem 1.25rem;
+    font-size: 14px;
+  }
+}
 .action-btn {
   cursor: pointer;
 }
