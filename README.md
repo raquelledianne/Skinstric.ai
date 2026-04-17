@@ -56,9 +56,9 @@ The goal of this project is to demonstrate strong skills in:
 
 ## 📸 Screenshots
 
-![Photo option (upload/live camera)](/screenshots/Skinstric-photo.png)
+![Photo option (upload/live camera)](./public/screenshots/Skinstric-photo.png)
 
-![Demographics screen](/screenshots/skinstric-demo.png)
+![Demographics screen](./public/screenshots/skinstric-demo.png)
 
 ---
 
