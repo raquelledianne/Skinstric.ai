@@ -1619,3 +1619,168 @@ position: absolute;
     transform-origin: bottom right;
   }
 }
+
+@media (max-width: 440px) {
+
+  /* =========================
+     GLOBAL TEXT + LAYOUT SAFETY
+  ========================== */
+  body {
+    overflow-x: hidden;
+  }
+
+  .testing-main {
+    padding-bottom: 120px; /* prevents back button overlap */
+  }
+
+  /* =========================
+     HEADER FIXES
+  ========================== */
+  .testing-header {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .testing-header-left img {
+    width: 45px !important;
+    height: auto !important;
+  }
+
+  .testing-brand {
+    font-size: 14px;
+  }
+
+  .start-analysis {
+    font-size: 10px;
+    text-align: center;
+  }
+
+  .testing-header-button {
+    font-size: 10px;
+    padding: 6px 10px;
+  }
+
+  /* =========================
+     BACK BUTTON (IMPORTANT FIX)
+  ========================== */
+  .testing-back {
+    position: fixed;
+    bottom: 12px;
+    left: 12px;
+    z-index: 50;
+  }
+
+  .back-image {
+    width: 70px !important;
+    height: auto !important;
+  }
+
+  .back-group {
+    transform: scale(0.8);
+    transform-origin: bottom left;
+  }
+
+  /* =========================
+     INTRO / INPUT PAGE
+  ========================== */
+  .intro-wrapper input {
+    font-size: 14px;
+    width: 90%;
+  }
+
+  .intro-wrapper p {
+    font-size: 12px;
+  }
+
+  /* =========================
+     CAMERA / CARDS
+  ========================== */
+  .camera-selection-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .camera-card {
+    transform: scale(0.85);
+  }
+
+  .camera-label {
+    font-size: 11px;
+    text-align: center;
+  }
+
+  /* prevent giant icons */
+  .camera-card img {
+    max-width: 220px !important;
+    height: auto !important;
+  }
+
+  /* =========================
+     PREVIEW BOX FIX
+  ========================== */
+  .gallery-preview-select,
+  .camera-selection-row div[style*="width: 150px"] {
+    width: 110px !important;
+    height: 110px !important;
+  }
+
+  /* =========================
+     CAMERA MODE
+  ========================== */
+  .camera-video-fullscreen {
+    object-fit: cover;
+  }
+
+  .take-pic-wrapper {
+    bottom: 90px;
+    transform: scale(0.85);
+  }
+
+  /* =========================
+     PROCEED BUTTON
+  ========================== */
+  .proceed-button {
+    width: 110px !important;
+    height: auto !important;
+  }
+
+  /* =========================
+     POPUPS
+  ========================== */
+  .camera-popup {
+    width: 90%;
+    font-size: 14px;
+  }
+
+}
+
+
+@media (max-width: 440px) {
+  .camera-setup-base {
+    width: 90% !important;
+    max-width: 320px;
+    height: auto;
+    margin-top: -60px; /* reduce negative shift for mobile */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 440px) {
+
+  .camera-text-bottom {
+    bottom: 12px;
+    width: 100%;
+    padding: 0 12px;
+    box-sizing: border-box;
+  }
+
+  .camera-text-bottom img {
+    width: 85% !important;
+    max-width: 320px !important;
+    height: auto !important;
+  }
+
+}
